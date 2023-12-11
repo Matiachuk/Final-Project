@@ -1,2 +1,2 @@
 # Final-Project
-Repository for Capstone project 
+some drawing app similar to photoshop
