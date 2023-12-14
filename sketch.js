@@ -8,6 +8,8 @@
 //Global variable(s)
 let R=0, G=0, B=0; //Colours for fill (R,G,B) default as black
 let size=10;
+let bD=[];
+Re=[];
 
 
 
@@ -23,6 +25,9 @@ function draw() {
   background(220);
   brush();
   brushSize();
+  for(strokes of bD){
+    strokes.display();
+  }
 }
 
 function userInputtedColour(){  //Uses an inputted value for RGB to change the fill of the brush to said colour
@@ -82,11 +87,36 @@ function brush(){ //Draws an ellipse on the mouse that follows, also includes br
     }
     if(keyIsDown(88)){  //88 is x
       frameRate(7); //changes the framerate to limit the inverse to restrain it from spamming through
-      InvertedColour(R,G,B);
-      
+      InvertedColour(R,G,B); 
     }
-    
+    if(keyIsDown(90)&&keyIsDown(CONTROL)){  //90 is z, this undoes the previous stroke
+      Re.push(bD.pop());
+      frameRate(30);
+      bD.pop();
+    }
+    if(keyIsDown(90)&&keyIsDown(CONTROL)&&keyIsDown(SHIFT)){  //90 is z, this redoes the previous stroke
+      bD.push(Re.pop());
+      frameRate(60);
+      Re.pop();
+    }
+  }
+  if(mouseIsPressed===true){
+    if(mouseButton===LEFT){
+      bD.push(new BrushDown(mouseX,mouseY,size));
+    }
   }
   
   ellipse(mouseX,mouseY,size);
+}
+
+class BrushDown{  //Creates a ellipse at the users mouse position with the colour and size when called in brush() via left clicking the mouse.
+  constructor(x,y,s){
+    this.x=x;
+    this.y=y;
+    this.s=s;
+  }
+  display(){
+    ellipse(this.x,this.y,this.s);
+  }
+
 }
