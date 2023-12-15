@@ -9,8 +9,8 @@
 let R=0, G=0, B=0; //Colours for fill (R,G,B) default as black
 let size=10;
 let bD=[];
-Re=[];
-
+let rE=[];
+let extraStrokes=[];
 
 
 
@@ -28,6 +28,17 @@ function draw() {
   for(strokes of bD){
     strokes.display();
   }
+//   bD.forEach(dot => {
+//     if (dot === undefined) {
+//         extraStrokes.push(dot);
+//     }
+// });
+// Re.forEach(dot => {
+//   if (dot === undefined) {
+//       extraStrokes.push(dot);
+//   }
+// });
+
 }
 
 function userInputtedColour(){  //Uses an inputted value for RGB to change the fill of the brush to said colour
@@ -90,14 +101,17 @@ function brush(){ //Draws an ellipse on the mouse that follows, also includes br
       InvertedColour(R,G,B); 
     }
     if(keyIsDown(90)&&keyIsDown(CONTROL)){  //90 is z, this undoes the previous stroke
-      Re.push(bD.pop());
-      frameRate(30);
-      bD.pop();
+      let undo=bD.pop();
+      rE.push(undo);
+      frameRate(5);
+      
     }
-    if(keyIsDown(90)&&keyIsDown(CONTROL)&&keyIsDown(SHIFT)){  //90 is z, this redoes the previous stroke
-      bD.push(Re.pop());
-      frameRate(60);
-      Re.pop();
+    if(keyIsDown(90)&&keyIsDown(SHIFT)){  //90 is z, this redoes the previous stroke
+     if(rE.length!==0){ //prevents the Redo from making undefined indexes in the bD array
+      let redo=rE.pop();
+      bD.push(redo);
+      frameRate(10);
+     }
     }
   }
   if(mouseIsPressed===true){
@@ -117,6 +131,7 @@ class BrushDown{  //Creates a ellipse at the users mouse position with the colou
   }
   display(){
     ellipse(this.x,this.y,this.s);
+    
   }
 
 }
