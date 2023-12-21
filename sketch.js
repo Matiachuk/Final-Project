@@ -11,7 +11,7 @@ let size=10;
 let bD=[];
 let rE=[];
 let RGB=[];
-let bgC=220;
+let bgR=220, bgG=220, bgB=220;
 
 
 
@@ -28,13 +28,16 @@ function setup() {
 }
 
 function draw() {
-  userInputtedBG();
+  background(bgR,bgG,bgB);
   brushSize();
   for(strokes of bD){
     strokes.display();
   }
   brush();
+}
 
+function userInputtedShape(){
+  
 }
 
 function userInputtedColour(){  //Uses an inputted value for RGB to change the fill of the brush to said colour
@@ -75,16 +78,21 @@ function brushSize(){ //Changes the brush size
   }
 }
 function userInputtedBG(){
-  if(keyIsPressed===true){
-    if(keyIsDown(70)&&keyIsDown(SHIFT)){   //70 is f
-      bgC=prompt("enter background colour (0-255)")
-    }
-  }
-  background(bgC);
+  // if(keyIsPressed===true){
+  //   if(keyIsDown(70)&&keyIsDown(SHIFT)){   //70 is f
+  bgR=int(prompt("enter background colour (0-255)"));
+  bgG=int(prompt("enter background colour (0-255)"));
+  bgB=int(prompt("enter background colour (0-255)"));
+  //   }
+  // }
 }
 function brush(){ //Draws an ellipse on the mouse that follows, also includes brush controls
   frameRate(120);
-  
+    if(keyIsPressed===true){
+      if(keyIsDown(70)&&keyIsDown(SHIFT)){   //70 is f
+        userInputtedBG();
+      }
+    }
   if(keyIsPressed===true){
     if(keyIsDown(84)){  //84 is t
       userInputtedColour();
