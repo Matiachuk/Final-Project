@@ -12,6 +12,12 @@ let bD=[];
 let rE=[];
 let RGB=[];
 let bgR=220, bgG=220, bgB=220;
+let defaultGrid=
+[[220,220,220,220,220],
+ [220,220,220,220,220],
+ [220,220,220,220,220],
+ [220,220,220,220,220]
+];
 
 
 
@@ -37,19 +43,19 @@ function draw() {
 }
 
 function userInputtedShape(){
-  
+  //square, rect, ellipse, triangle
 }
 
 function eraser(){
-  fill(bgR,bgG,bgB);
-  stroke(bgR,bgG,bgB);
-  print("something");
-  for(let i=0;i<3;i++){
-    RGB.pop();
-  }
+  RGB=[];
   RGB.push(bgR);
   RGB.push(bgG);
   RGB.push(bgB);
+  fill(bgR,bgG,bgB);
+  stroke(bgR,bgG,bgB);
+  // for(let i=0;i<3;i++){
+  //   RGB.pop();
+  // }
   
 }
 
@@ -58,9 +64,6 @@ function userInputtedColour(){  //Uses an inputted value for RGB to change the f
   R=prompt("Enter a R value from 0-255");
   G=prompt("Enter a G value from 0-255");
   B=prompt("Enter a B value from 0-255");
-  for(let i=0;i<3;i++){
-    RGB.pop();
-  }
   RGB.push(R);
   RGB.push(G);
   RGB.push(B);
@@ -74,9 +77,6 @@ function InvertedColour(r,g,b){ //Inverts the fill colour
   B=255-b;
   fill(R,G,B);
   stroke(R,G,B);
-  for(let i=0;i<3;i++){
-    RGB.pop();
-  }
   RGB.push(R);
   RGB.push(G);
   RGB.push(B);
@@ -133,17 +133,20 @@ function brush(){ //Draws an ellipse on the mouse that follows, also includes br
       frameRate(10);
     }
   }
-    if(keyIsDown(69)){ //69 is e
-        eraser(); //This changes the brush and stroke (outer ring surrounding brush) colour to the colour of the background
-  }
   }
   if(mouseIsPressed===true){
     if(mouseButton===LEFT){
       bD.push(new BrushDown(mouseX,mouseY,RGB,size));
     }
   }
-  if(keyIsPressed!=true){
+  if(keyIsPressed===true){
+    if(keyIsDown(69)){ //69 is e
+      eraser(); //This changes the brush and stroke (outer ring surrounding brush) colour to the colour of the background
+    }
+  }
+  else if(keyIsPressed!=true){
     fill(R,G,B);
+    RGB=[R,G,B];
     stroke(255-R,255-G,255-B);
   }
   
