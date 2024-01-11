@@ -12,12 +12,14 @@ let bD=[];
 let rE=[];
 let RGB=[];
 let bgR=220, bgG=220, bgB=220;
+let userShape;
 let defaultGrid=
 [[220,220,220,220,220],
  [220,220,220,220,220],
  [220,220,220,220,220],
  [220,220,220,220,220]
 ];
+let gridActive;
 
 
 
@@ -44,6 +46,8 @@ function draw() {
 
 function userInputtedShape(){
   //square, rect, ellipse, triangle
+  text("square, rect, ellipse, triangle",windowWidth/2,windowHeight/2);
+  userShape=prompt("Enter an eligible shape");
 }
 
 function eraser(){
@@ -53,8 +57,11 @@ function eraser(){
   RGB.push(bgB);
   fill(bgR,bgG,bgB);
   stroke(bgR,bgG,bgB);
-  // for(let i=0;i<3;i++){
-  //   RGB.pop();
+  // if(keyReleased()){
+  //   RGB=[];
+  //   RGB.push(R);
+  //   RGB.push(G);
+  //   RGB.push(B);
   // }
   
 }
@@ -131,6 +138,9 @@ function brush(){ //Draws an ellipse on the mouse that follows, also includes br
       let redo=rE.pop();
       bD.push(redo);
       frameRate(10);
+    }
+    if(keyIsDown(66)&&keyIsDown(SHIFT)){
+      userInputtedShape();
     }
   }
   }
